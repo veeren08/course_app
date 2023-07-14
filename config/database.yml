@@ -1,0 +1,40 @@
+# Install the pg driver:
+#   gem install pg
+# On macOS with Homebrew:
+#   gem install pg -- --with-pg-config=/usr/local/bin/pg_config
+# On macOS with MacPorts:
+#   gem install pg -- --with-pg-config=/opt/local/lib/postgresql84/bin/pg_config
+# On Windows:
+#   gem install pg
+#       Choose the win32 build.
+#       Install PostgreSQL and put its /bin directory on your path.
+#
+# Configure Using Gemfile
+# gem 'pg'
+#
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV["RAILS_DB_POOL"] || ENV['RAILS_MAX_THREADS'] || 5 %>
+  idle_timeout: <%= ENV["RAILS_IDLE_CONNECTION"] ||  60 %>
+  port: <%= ENV['RAILS_DATABASE_PORT'] || 5432 %>
+
+development:
+  <<: *default
+  database: course_app_development
+  username: <%= ENV['USERNAME'] %>
+  password: <%= ENV['PASSWORD'] %>
+  host: localhost
+
+test:
+  <<: *default
+  database: course_app_test
+  username: <%= ENV['USERNAME'] %>
+  password: <%= ENV['PASSWORD'] %>
+  host: localhost
+
+production:
+  <<: *default
+  database: course_app_production
+  username: course_app
+  password: <%= ENV['COURSE_APP_DATABASE_PASSWORD'] %>
